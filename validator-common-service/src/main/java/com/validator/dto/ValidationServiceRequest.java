@@ -1,6 +1,5 @@
 package com.validator.dto;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,26 +11,19 @@ import lombok.Setter;
 
 @Setter @Getter
 public class ValidationServiceRequest {
-	@NotBlank(message = "firstName not empty")
-	@NotNull(message = "firstName not null")
+	@NotBlank(message = "firstName should not empty and should not null")
 	private String firstName;
-	@NotBlank(message = "lastName not empty")
-	@NotNull(message = "lastName not null")
+	@NotBlank(message = "lastName should not empty and should not null")
 	private String lastName;
-	@NotBlank(message = "gender not empty")
-	@NotNull(message = "gender not null")
+	@NotBlank(message = "gender should not empty and should not null")
 	private String gender;
-	@NotBlank(message = "gender not empty")
-	@NotNull(message = "gender not null")
+	@NotBlank(message = "gender should not empty and should not null")
 	private String confirmNumber;
-	@NotBlank(message = "address not empty")
-	@NotNull(message = "address not null")
+	@NotBlank(message = "address should not empty and should not null")
 	private String address;
-	@NotBlank(message = "city not empty")
-	@NotNull(message = "city not null")
+	@NotBlank(message = "city should not empty and should not null")
 	private String city;
-	@NotBlank(message = "webAddress not empty")
-	@NotNull(message = "webAddress not null")
+	@NotBlank(message = "webAddress should not empty and should not null")
 	private String webAddress;	
 
 }

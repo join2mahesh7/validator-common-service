@@ -1,6 +1,5 @@
 package com.validator.services;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.validator.dto.ValidationServiceRequest;
 import com.validator.dto.ValidationServiceResponse;
-import com.validator.enums.Status;
 import com.validator.util.ValidationUtil;
 
 /**
@@ -44,8 +42,6 @@ public class ValidationService {
 					.builder()
 					.httpStatus(HttpStatus.BAD_REQUEST)
 					.httpStatusCode(HttpStatus.BAD_REQUEST.value())
-					.timestamp(LocalDateTime.now())
-					.status(Status.FAIL.getValue())
 					.errors(messages)
 					.build();
 		} else {
@@ -53,8 +49,6 @@ public class ValidationService {
 					.builder()
 					.httpStatus(HttpStatus.OK)
 					.httpStatusCode(HttpStatus.OK.value())
-					.timestamp(LocalDateTime.now())
-					.status(Status.SUCCESS.getValue())
 					.errors(messages)
 					.build();
 		}
@@ -63,8 +57,6 @@ public class ValidationService {
 					.builder()
 					.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 					.httpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-					.timestamp(LocalDateTime.now())
-					.status(Status.SUCCESS.getValue())
 					.errors(messages)
 					.build();
 		}

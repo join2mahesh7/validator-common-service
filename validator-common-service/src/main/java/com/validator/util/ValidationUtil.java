@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.util.StringUtils;
 import com.validator.enums.Gender;
+
 /**
  * 
  * @author JavaLakshmi
@@ -14,12 +15,13 @@ import com.validator.enums.Gender;
 public class ValidationUtil {
 	private final static String STR_PATTERN = "^[A-Za-z,]++$";
 	private final static String NUM_PATTERN = "^[1-9]\\d*$";
-	private final static String CITY_PATTERN = "(?:[A-Z][a-z.-]+[ ]?)+";
+	private final static String CITY_PATTERN = "^[A-Za-z,]++$";
 	private final static String ADDRESS_PATTERN = "(?:[A-Z][a-z.-]+[ ]?)+";
 	private final static String WEB_ADDRESS_PATTERN = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
 	/**
 	 * nameValidator.
+	 * 
 	 * @param string as request parameter
 	 * @return name validation message.
 	 */
@@ -33,8 +35,10 @@ public class ValidationUtil {
 		}
 		return value;
 	}
+
 	/**
 	 * genderValidator.
+	 * 
 	 * @param string as request parameter
 	 * @return gender validation message.
 	 */
@@ -55,6 +59,7 @@ public class ValidationUtil {
 
 	/**
 	 * numValidator.
+	 * 
 	 * @param string as request parameter
 	 * @return number validation message.
 	 */
@@ -70,6 +75,7 @@ public class ValidationUtil {
 
 	/**
 	 * cityValidator.
+	 * 
 	 * @param string as request parameter
 	 * @return city validation message.
 	 */
@@ -77,7 +83,7 @@ public class ValidationUtil {
 		String value = "";
 		Pattern pattern = Pattern.compile(CITY_PATTERN);
 		Matcher matcher = pattern.matcher(city);
-		if (matcher.matches()) {
+		if (!matcher.matches()) {
 			value = "enter valid city";
 		}
 		return value;
@@ -85,6 +91,7 @@ public class ValidationUtil {
 
 	/**
 	 * addressValidator.
+	 * 
 	 * @param string as request parameter
 	 * @return city validation message.
 	 */
@@ -100,6 +107,7 @@ public class ValidationUtil {
 
 	/**
 	 * webAddressValidator.
+	 * 
 	 * @param string as request parameter
 	 * @return web address validation message.
 	 */
@@ -111,6 +119,21 @@ public class ValidationUtil {
 			value = "enter valid web url";
 		}
 		return value;
+	}
+
+	/**
+	 * isNotBlank.
+	 * @param field
+	 * @return String , message
+	 */
+	public static String isNotBlank(String field, String fieldName) {
+		String message = "";
+		if (field == null) {
+			message = fieldName + " should not be not null";
+		} else if (field.trim().length() > 0) {
+			message = fieldName + " should not be not empty";
+		}
+		return message;
 	}
 
 }
