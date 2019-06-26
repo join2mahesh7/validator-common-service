@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.validator.constants.GlobalConstants;
 import com.validator.dto.ValidationServiceRequest;
 import com.validator.dto.ValidationServiceResponse;
+import com.validator.exception.ValidationException;
 import com.validator.util.ValidationUtil;
 
 /**
@@ -21,44 +23,29 @@ public class ValidationService {
 
 	/**
 	 * validate.
+	 * 
 	 * @param validateData request data
 	 * @return ValidationServiceResponse response
+	 * @throws ValidationException
 	 */
-	public ValidationServiceResponse validate(ValidationServiceRequest validateData) {
+	public ValidationServiceResponse validate(ValidationServiceRequest validateData) throws ValidationException {
 		List<String> messages = new ArrayList<>();
 		ValidationServiceResponse response = null;
-		try {
-		messages.add(ValidationUtil.nameValidator(validateData.getFirstName()));
-		messages.add(ValidationUtil.nameValidator(validateData.getLastName()));
-		messages.add(ValidationUtil.numValidator(validateData.getConfirmNumber()));
-		messages.add(ValidationUtil.genderValidator(validateData.getGender()));
-		messages.add(ValidationUtil.cityValidator(validateData.getCity()));
-		messages.add(ValidationUtil.addressValidator(validateData.getAddress()));
-		messages.add(ValidationUtil.webAddressValidator(validateData.getWebAddress()));
+		messages.add(ValidationUtil.nameValidator(validateData.getFirstName(), GlobalConstants.FIRST_NAME));
+		messages.add(ValidationUtil.nameValidator(validateData.getLastName(), GlobalConstants.LAST_NAME));
+		messages.add(
+				ValidationUtil.numValidator(validateData.getConfirmationNumber(), GlobalConstants.CONFIRMATION_NUMBER));
+		messages.add(ValidationUtil.genderValidator(validateData.getGender(), GlobalConstants.GENDER));
+		messages.add(ValidationUtil.cityValidator(validateData.getCity(), GlobalConstants.CITY));
+		messages.add(ValidationUtil.addressValidator(validateData.getAddress(), GlobalConstants.ADDRESS));
+		messages.add(ValidationUtil.webAddressValidator(validateData.getWebAddress(), GlobalConstants.WEB_ADDRESS));
 		messages.removeAll(Collections.singleton(null));
 		messages.removeAll(Collections.singleton(""));
 		if (messages.size() > 0) {
-			response = ValidationServiceResponse
-					.builder()
-					.httpStatus(HttpStatus.BAD_REQUEST)
-					.httpStatusCode(HttpStatus.BAD_REQUEST.value())
-					.errors(messages)
-					.build();
+			throw new ValidationException("validation error", messages);
 		} else {
-			response = ValidationServiceResponse
-					.builder()
-					.httpStatus(HttpStatus.OK)
-					.httpStatusCode(HttpStatus.OK.value())
-					.errors(messages)
-					.build();
-		}
-		} catch (Exception e) {
-			response = ValidationServiceResponse
-					.builder()
-					.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-					.httpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-					.errors(messages)
-					.build();
+			response = ValidationServiceResponse.builder().httpStatus(HttpStatus.OK)
+					.httpStatusCode(HttpStatus.OK.value()).errors(messages).build();
 		}
 		return response;
 	}

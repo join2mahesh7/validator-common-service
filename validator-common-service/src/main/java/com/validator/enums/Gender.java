@@ -2,6 +2,7 @@ package com.validator.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 /**
  * 
  * @author JayaLakshmi.
@@ -10,7 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Gender {
-	MALE("MALE","M"), FEMELE("FEMALE","F");
+	MALE("MALE", "M"), FEMELE("FEMALE", "F");
 	private String name;
 	private String nameType;
 

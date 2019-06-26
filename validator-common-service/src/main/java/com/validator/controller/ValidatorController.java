@@ -1,15 +1,14 @@
 package com.validator.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.validator.dto.ValidationServiceResponse;
 import com.validator.dto.ValidationServiceRequest;
+import com.validator.dto.ValidationServiceResponse;
+import com.validator.exception.ValidationException;
 import com.validator.services.ValidationService;
 
 /**
@@ -21,13 +20,16 @@ import com.validator.services.ValidationService;
 public class ValidatorController {
 	@Autowired
 	ValidationService validationService;
+
 	/**
-	 * 
+	 * validate.
 	 * @param request, validate parameters
-	 * @return response with message, http status, errors if any.  
+	 * @return response with message, http status, errors if any.
+	 * @throws ValidationException
 	 */
 	@PostMapping("validate")
-	public ResponseEntity<ValidationServiceResponse> validate(@Valid @RequestBody ValidationServiceRequest request) {
+	public ResponseEntity<ValidationServiceResponse> validate(@RequestBody ValidationServiceRequest request)
+			throws ValidationException {
 		ValidationServiceResponse resp = validationService.validate(request);
 		return new ResponseEntity<ValidationServiceResponse>(resp, resp.getHttpStatus());
 	}

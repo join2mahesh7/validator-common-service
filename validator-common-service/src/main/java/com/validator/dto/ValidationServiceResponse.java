@@ -19,4 +19,3 @@ public class ValidationServiceResponse {
 	private int httpStatusCode;
 	private List<String> errors;
 }
-
