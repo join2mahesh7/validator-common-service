@@ -15,6 +15,7 @@ public class ValidatorRestExceptionHandler {
 		return buildResponseEntity(ValidationServiceResponse.builder().httpStatus(HttpStatus.BAD_REQUEST)
 				.httpStatusCode(HttpStatus.BAD_REQUEST.value()).errors(ex.getErrors()).build());
 	}
+
 	private ResponseEntity<Object> buildResponseEntity(ValidationServiceResponse response) {
 		return new ResponseEntity<Object>(response, response.getHttpStatus());
 	}
